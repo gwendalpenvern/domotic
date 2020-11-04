@@ -10,15 +10,16 @@ def fichierVersListe(cheminFich):
     for line in f:
         print()
         points.append(line.split("\n")[0].split(",")[0])
-        temperatures.append(float(line.split("\n")[0].split(",")[1]))
+        temperature.append(float(line.split("\n")[0].split(",")[1]))
+        humidity.append(float(line.split("\n")[0].split(",")[2]))
     f.close()
-    return [points, temperatures]
+    return [points, temperature, humidity]
 
 data = fichierVersListe("data/data.txt")
 
-plt.title("distance en fonction de la puissance re  ue")
-plt.xlabel("distance approximative (metre)")
-plt.ylabel("puissance re  ue (dBm)")
+plt.title("Variation de la température et de l'humidité en fonction du temps")
+plt.xlabel("Température")
+plt.ylabel("Date/heure")
 plt.plot(data[0],data[1])
 
 plt.savefig("test.png")
