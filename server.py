@@ -19,7 +19,7 @@ def get_average_temperature():
     day = str(datetime.datetime.now())[:10]
     try:
         return np.mean(fichierVersListe(main_dir + "data/" + day + ".txt"))
-    else:
+    except:
         return "Unknown"
 
 app = Flask(__name__)

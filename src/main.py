@@ -152,6 +152,10 @@ if __name__ == "__main__":
         if ( time == actual_time + 1 ):
             #17:19 : secondes et 14:16 : minutes
             actual_time = int(str(datetime.datetime.now())[14:16])
+
+            if(actual_time == 59):
+                time = -1
+                
             program(main_dir)
 
     print("[!] Fin du programme\n")
