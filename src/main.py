@@ -54,8 +54,14 @@ def enregistrement(temperature, mainDir):
             /
         '''
     date = str(datetime.datetime.now())[:-10]
-    with open(mainDir + "data/" + date[:10] + ".txt", "a") as fichier:
-        fichier.write(date[11:] + "," + str(temperature) + "\n")
+
+    if( os.path.isfile(str(mainDir + "data/" + date[:10] + ".txt")) ):
+        with open(mainDir + "data/" + date[:10] + ".txt", "a") as fichier:
+            fichier.write(date[11:] + "," + str(temperature) + "\n")
+    else:
+        with open(mainDir + "data/" + date[:10] + ".txt", "w") as fichier:
+            fichier.write(date[11:] + "," + str(temperature) + "\n")
+
 
 def fichierVersListe(cheminFich):
     f = open(cheminFich, "r")
