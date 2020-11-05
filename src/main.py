@@ -88,6 +88,7 @@ def data_to_graph(mainDir,date):
 # Programme de traitement ---------------------------------------
 
 def program(mainDir):
+    date = str(datetime.datetime.now())[:-10]
     temp = get_temperature()
     enregistrement(temp,mainDir)
     data_to_graph(mainDir,date)
