@@ -7,6 +7,8 @@ import numpy as np
 import os
 import time
 
+# fonction et variable de température ---------------------------
+
 sensor = Adafruit_DHT.AM2302
 pin = 4
 
@@ -34,10 +36,26 @@ def get_humidity():
         tmp += get_temp_humidity()[1]
     return round(tmp/5,1)
 
-def enregistrement(temp, mainDir):
+#----------------------------------------------------------------
+
+# fonction de gestion de fichier --------------------------------
+
+def enregistrement(temperature, mainDir):
+    '''Record temperature in the data directory for the 
+
+        Args:
+            temperature (float): Temperature to record
+            mainDir (str): Path of the application "<Path>/domotic/"
+
+        Raises:
+            /
+
+        Returns:
+            /
+        '''
     date = str(datetime.datetime.now())[:-10]
-    with open(mainDir + "data/data.txt", "a") as fichier:
-        fichier.write(str(date) + "," + str(temp) + "\n")
+    with open(mainDir + "data/" + date[:10] + ".txt", "a") as fichier:
+        fichier.write(date[11:] + "," + str(temperature) + "\n")
 
 def fichierVersListe(cheminFich):
     f = open(cheminFich, "r")
@@ -50,22 +68,26 @@ def fichierVersListe(cheminFich):
     f.close()
     return [points, temperature]
 
-def data_to_graph(mainDir):
-    data = fichierVersListe(mainDir + "data/data.txt")
-    plt.title("Variation de la température et de l'humidité en fonction du temps")
-    plt.xlabel("Date/heure")
+def data_to_graph(mainDir,date):
+    data = fichierVersListe(mainDir + "data/" + str(date) + ".txt")
+    plt.plot(data[0],data[1], color='g', label="Température")
+    plt.title("Variation de la température en fonction du temps")
+    plt.xlabel("Heure")
     plt.ylabel("Température")
-    plt.plot(data[0],data[1])
 
     plt.savefig(mainDir + "static/images/test.png")
+
+#----------------------------------------------------------------
+
+# Programme de traitement ---------------------------------------
 
 def program(mainDir):
     temp = get_temperature()
     enregistrement(temp,mainDir)
-    data_to_graph(mainDir)
+    data_to_graph(mainDir,date)
     print("saved picture at " + str(datetime.datetime.now())[11:16] + " the " + str(datetime.datetime.now())[:10] + " with temperature of " + str(temp) + "'C\n")
 
-
+#----------------------------------------------------------------
 
 if __name__ == "__main__":
     main_dir = str(os.path.abspath(__file__))[:-11]

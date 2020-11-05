@@ -16,9 +16,11 @@ def fichierVersListe(cheminFich):
 
 def data_to_graph():
     data = fichierVersListe("data/data.txt")
-    plt.title("Variation de la température et de l'humidité en fonction du temps")
-    plt.xlabel("Date/heure")
+    plt.plot(data[0],data[1], color='g', label="Température")
+    plt.title("Variation de la température en fonction du temps")
+    plt.xlabel("Heure")
     plt.ylabel("Température")
-    plt.plot(data[0],data[1])
-
+    
     plt.savefig("test.png")
+
+data_to_graph()

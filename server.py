@@ -21,6 +21,6 @@ def add_header(r):
 
 @app.route("/")
 def affTemp():
-    return render_template('index.html')
+    return render_template('index.html', image="test.png")
 
 app.run(debug=True, host='0.0.0.0', port=5000)
