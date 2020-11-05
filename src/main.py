@@ -77,8 +77,8 @@ if __name__ == "__main__":
     while(True):
         while((int(str(datetime.datetime.now())[17:19])%59) != 0):#17:19 : secondes et 14:16 : minutes
             pass
-        print("in : " + str(datetime.datetime.now())[14:16] + "\n")
+        print("in : " + str(str(datetime.datetime.now())[14:16]) + "\n")
         time.sleep(59)
-        program(mainDir)
+        program(main_dir)
             
     print("[!] Fin du programme\n")
