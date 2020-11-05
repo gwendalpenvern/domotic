@@ -3,6 +3,7 @@
 from flask import Flask, render_template
 import datetime
 import os
+import numpy as np
 
 def fichierVersListe(cheminFich):
     f = open(cheminFich, "r")
@@ -14,9 +15,12 @@ def fichierVersListe(cheminFich):
 
 
 def get_average_temperature():
-    main_dir = str(os.path.abspath(__file__))
+    main_dir = str(os.path.abspath(__file__))[:-9]
     day = str(datetime.datetime.now())[:10]
-    return mean(fichierVersListe(main_dir + "/data/" + day + ".txt"))
+    try:
+        return np.mean(fichierVersListe(main_dir + "data/" + day + ".txt"))
+    else:
+        return "Unknown"
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
