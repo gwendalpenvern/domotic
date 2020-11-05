@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import time
+import argparse
 
 # fonction et variable de température ---------------------------
 
@@ -13,6 +14,17 @@ sensor = Adafruit_DHT.AM2302
 pin = 4
 
 def get_temp_humidity():
+    '''Get temperature and humidity from the captor AM2302 
+
+        Args:
+            /
+
+        Raises:
+            /
+
+        Returns:
+            [temperature,humidity] (list): Temperature and humidity rounded one decimal
+        '''
     result  = False
     while(result != True):
         humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
@@ -25,12 +37,34 @@ def get_temp_humidity():
     return [round(temperature,1),round(humidity,1)]
 
 def get_temperature():
+    '''Get an average temperature 
+
+        Args:
+            /
+
+        Raises:
+            /
+
+        Returns:
+            temperature (float): temperature
+        '''
     tmp = 0
     for i in range(5):
         tmp += get_temp_humidity()[0]
     return round(tmp/5,1)
 
 def get_humidity():
+    '''Get an average humidity 
+
+        Args:
+            /
+
+        Raises:
+            /
+
+        Returns:
+            humidity (float): humidity
+        '''
     tmp = 0
     for i in range(5):
         tmp += get_temp_humidity()[1]
@@ -78,6 +112,7 @@ def data_to_graph(mainDir,date):
     data = fichierVersListe(mainDir + "data/" + str(date) + ".txt")
     plt.plot(data[0],data[1], color='g', label="Température")
     plt.title("Variation de la température en fonction du temps")
+    plt.xticks(rotate=45)
     plt.xlabel("Heure")
     plt.ylabel("Température")
 
@@ -86,6 +121,14 @@ def data_to_graph(mainDir,date):
 #----------------------------------------------------------------
 
 # Programme de traitement ---------------------------------------
+
+def parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--verbose', help="give you some debug information", action="store_true", default=False)
+    parser.add_argument('-t', '--timming', help="time interval between every point measure (minute)", default=5)
+    args = parser.parse_args()
+
+    return args
 
 def program(mainDir):
     date = str(datetime.datetime.now())[:10]
@@ -105,7 +148,7 @@ if __name__ == "__main__":
 
     while(True):
         time = int(str(datetime.datetime.now())[14:16])
-        if ( time != actual_time ):
+        if ( time != actual_time + 5 ):
             #17:19 : secondes et 14:16 : minutes
             actual_time = int(str(datetime.datetime.now())[14:16])
             program(main_dir)

@@ -5,10 +5,11 @@
         <meta content="utf-8" http-equiv="encoding">
         <link rel = "icon" type = "image/png" href = "https://raspberry-lab.fr/ImgStat/Icon.png" />
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-        <title>Domotic pre-alpha</title>
+        <title>Domotic alpha</title>
     </head>
 
     <body>
+        <h1>température moyenne  : {{ path_image }}</h1>
         <img src="{{ path_image }}" />
     </body>
 </html>

@@ -19,9 +19,14 @@ def add_header(r):
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
+def get_average_temperature():
+
+    return 35
 
 @app.route("/")
 def affTemp():
-    return render_template('index.html', path_image="/static/images/" + str(datetime.datetime.now())[:10] + ".png" )
+    return render_template('index.html',\
+        path_image="/static/images/" + str(datetime.datetime.now())[:10] + ".png" \
+        average_temp=get_average_temp() )
 
 app.run(debug=True, host='0.0.0.0', port=5000)
