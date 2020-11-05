@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-#import Adafruit_DHT
+import Adafruit_DHT
 import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import time
 
-#sensor = Adafruit_DHT.AM2302
+sensor = Adafruit_DHT.AM2302
 pin = 4
 
 def get_temp_humidity():
@@ -26,8 +26,6 @@ def get_temperature():
     tmp = 0
     for i in range(5):
         tmp += get_temp_humidity()[0]
-    if(sauvegardeStatus):
-        enregistrement(round(tmp/5,1))
     return round(tmp/5,1)
 
 def get_humidity():
@@ -77,10 +75,10 @@ if __name__ == "__main__":
     print("[!] Début du programme\n")
 
     while(True):
-        while((int(str(datetime.datetime.now())[17:19])%15) != 0):#17:19 : secondes et 14:16 : minutes
+        while((int(str(datetime.datetime.now())[17:19])%59) != 0):#17:19 : secondes et 14:16 : minutes
             pass
         print("in : " + str(datetime.datetime.now())[14:16] + "\n")
-        time.sleep(1)
+        time.sleep(59)
         program(mainDir)
             
     print("[!] Fin du programme\n")
