@@ -16,3 +16,11 @@ def parser():
     return args
 
 print(parser().timming)
+
+actual_time = 999
+
+while(True):
+    time = int(str(datetime.datetime.now())[14:16])
+    if ( time != (actual_time + 5) ):
+        #17:19 : secondes et 14:16 : minutes
+        actual_time = int(str(datetime.datetime.now())[14:16])

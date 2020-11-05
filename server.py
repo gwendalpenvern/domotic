@@ -4,6 +4,20 @@ from flask import Flask, render_template
 import datetime
 import os
 
+def fichierVersListe(cheminFich):
+    f = open(cheminFich, "r")
+    temperature = []
+    for line in f:
+        temperature.append(float(line.split("\n")[0].split(",")[1]))
+    f.close()
+    return temperature
+
+
+def get_average_temperature():
+    main_dir = str(os.path.abspath(__file__))
+    day = str(datetime.datetime.now())[:10]
+    return mean(fichierVersListe(main_dir + "/data/" + day + ".txt"))
+
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
@@ -19,14 +33,8 @@ def add_header(r):
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
-def get_average_temperature():
-
-    return 35
-
 @app.route("/")
 def affTemp():
-    return render_template('index.html',\
-        path_image="/static/images/" + str(datetime.datetime.now())[:10] + ".png" \
-        average_temp=get_average_temp() )
+    return render_template('index.html', path_image="/static/images/" + str(datetime.datetime.now())[:10] + ".png",average_temp=get_average_temperature() )
 
 app.run(debug=True, host='0.0.0.0', port=5000)

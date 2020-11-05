@@ -2,6 +2,7 @@
 
 import Adafruit_DHT
 import datetime
+from datetime import timedelta
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -102,7 +103,6 @@ def fichierVersListe(cheminFich):
     points = []
     temperature = []
     for line in f:
-        print()
         points.append(line.split("\n")[0].split(",")[0])
         temperature.append(float(line.split("\n")[0].split(",")[1]))
     f.close()
@@ -112,7 +112,7 @@ def data_to_graph(mainDir,date):
     data = fichierVersListe(mainDir + "data/" + str(date) + ".txt")
     plt.plot(data[0],data[1], color='g', label="Température")
     plt.title("Variation de la température en fonction du temps")
-    plt.xticks(rotate=45)
+    plt.xticks(rotation=45)
     plt.xlabel("Heure")
     plt.ylabel("Température")
 
@@ -144,13 +144,14 @@ if __name__ == "__main__":
     #os.system(main_dir + "server.py &")
 
     print("[!] Début du programme\n")
-    actual_time = None
+    actual_time = int(str(datetime.datetime.now())[14:16])
+    program(main_dir)
 
     while(True):
         time = int(str(datetime.datetime.now())[14:16])
-        if ( time != actual_time + 5 ):
+        if ( time == actual_time + 1 ):
             #17:19 : secondes et 14:16 : minutes
             actual_time = int(str(datetime.datetime.now())[14:16])
             program(main_dir)
-            
+
     print("[!] Fin du programme\n")
