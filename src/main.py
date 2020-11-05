@@ -81,14 +81,14 @@ def data_to_graph(mainDir,date):
     plt.xlabel("Heure")
     plt.ylabel("Température")
 
-    plt.savefig(mainDir + "static/images/test.png")
+    plt.savefig(mainDir + "static/images/" + date + ".png")
 
 #----------------------------------------------------------------
 
 # Programme de traitement ---------------------------------------
 
 def program(mainDir):
-    date = str(datetime.datetime.now())[:-10]
+    date = str(datetime.datetime.now())[:10]
     temp = get_temperature()
     enregistrement(temp,mainDir)
     data_to_graph(mainDir,date)
