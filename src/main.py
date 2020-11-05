@@ -22,7 +22,7 @@ def get_temp_humidity():
             result = False
     return [round(temperature,1),round(humidity,1)]
 
-def get_temperature(sauvegardeStatus):
+def get_temperature():
     tmp = 0
     for i in range(5):
         tmp += get_temp_humidity()[0]
@@ -36,9 +36,9 @@ def get_humidity():
         tmp += get_temp_humidity()[1]
     return round(tmp/5,1)
 
-def enregistrement(temp):
+def enregistrement(temp, mainDir):
     date = str(datetime.datetime.now())[:-10]
-    with open("../data.txt", "a") as fichier:
+    with open(mainDir + "data/data.txt", "a") as fichier:
         fichier.write(str(date) + "," + str(temp) + "\n")
 
 def fichierVersListe(cheminFich):
@@ -52,17 +52,21 @@ def fichierVersListe(cheminFich):
     f.close()
     return [points, temperature]
 
-def data_to_graph():
-    data = fichierVersListe("data/data.txt")
+def data_to_graph(mainDir):
+    data = fichierVersListe(mainDir + "data/data.txt")
     plt.title("Variation de la température et de l'humidité en fonction du temps")
     plt.xlabel("Date/heure")
     plt.ylabel("Température")
     plt.plot(data[0],data[1])
 
-    plt.savefig("test.png")
+    plt.savefig(mainDir + "static/images/test.png")
 
-def program():
-    pass
+def program(mainDir):
+    temp = get_temperature()
+
+    enregistrement(temp,mainDir)
+
+    data_to_graph(mainDir)
 
 
 
@@ -77,5 +81,6 @@ if __name__ == "__main__":
             pass
         print("in : " + str(datetime.datetime.now())[14:16] + "\n")
         time.sleep(1)
+        program(mainDir)
             
     print("[!] Fin du programme\n")
