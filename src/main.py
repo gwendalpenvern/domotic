@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-import Adafruit_DHT
+#import Adafruit_DHT
 import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import time
 
-sensor = Adafruit_DHT.AM2302
+#sensor = Adafruit_DHT.AM2302
 pin = 4
 
 def get_temp_humidity():
@@ -44,14 +44,25 @@ def enregistrement(temp):
 def fichierVersListe(cheminFich):
     f = open(cheminFich, "r")
     points = []
-    temperatures = []
+    temperature = []
     for line in f:
         print()
         points.append(line.split("\n")[0].split(",")[0])
         temperature.append(float(line.split("\n")[0].split(",")[1]))
-        humidity.append(float(line.split("\n")[0].split(",")[2]))
     f.close()
-    return [points, temperature, humidity]
+    return [points, temperature]
+
+def data_to_graph():
+    data = fichierVersListe("data/data.txt")
+    plt.title("Variation de la température et de l'humidité en fonction du temps")
+    plt.xlabel("Date/heure")
+    plt.ylabel("Température")
+    plt.plot(data[0],data[1])
+
+    plt.savefig("test.png")
+
+def program():
+    pass
 
 
 
@@ -59,8 +70,12 @@ if __name__ == "__main__":
     main_dir = str(os.path.abspath(__file__))[:-11]
     #os.system(main_dir + "server.py &")
 
-    for i in range(15):
-        print("in")
-        time.sleep(60)
-        os.system("curl -s '0.0.0.0:5000' > /dev/null")
-    
+    print("[!] Début du programme\n")
+
+    while(True):
+        while((int(str(datetime.datetime.now())[17:19])%15) != 0):#17:19 : secondes et 14:16 : minutes
+            pass
+        print("in : " + str(datetime.datetime.now())[14:16] + "\n")
+        time.sleep(1)
+            
+    print("[!] Fin du programme\n")

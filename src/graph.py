@@ -6,20 +6,19 @@ import numpy as np
 def fichierVersListe(cheminFich):
     f = open(cheminFich, "r")
     points = []
-    temperatures = []
+    temperature = []
     for line in f:
         print()
         points.append(line.split("\n")[0].split(",")[0])
         temperature.append(float(line.split("\n")[0].split(",")[1]))
-        humidity.append(float(line.split("\n")[0].split(",")[2]))
     f.close()
-    return [points, temperature, humidity]
+    return [points, temperature]
 
-data = fichierVersListe("data/data.txt")
+def data_to_graph():
+    data = fichierVersListe("data/data.txt")
+    plt.title("Variation de la température et de l'humidité en fonction du temps")
+    plt.xlabel("Date/heure")
+    plt.ylabel("Température")
+    plt.plot(data[0],data[1])
 
-plt.title("Variation de la température et de l'humidité en fonction du temps")
-plt.xlabel("Température")
-plt.ylabel("Date/heure")
-plt.plot(data[0],data[1])
-
-plt.savefig("test.png")
+    plt.savefig("test.png")
