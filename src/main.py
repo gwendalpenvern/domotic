@@ -61,9 +61,7 @@ def data_to_graph(mainDir):
 
 def program(mainDir):
     temp = get_temperature()
-
     enregistrement(temp,mainDir)
-
     data_to_graph(mainDir)
 
 
@@ -78,7 +76,7 @@ if __name__ == "__main__":
         while((int(str(datetime.datetime.now())[17:19])%59) != 0):#17:19 : secondes et 14:16 : minutes
             pass
         print("in : " + str(str(datetime.datetime.now())[14:16]) + "\n")
-        time.sleep(59)
         program(main_dir)
+        time.sleep(1)
             
     print("[!] Fin du programme\n")
