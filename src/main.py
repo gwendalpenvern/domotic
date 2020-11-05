@@ -63,7 +63,7 @@ def program(mainDir):
     temp = get_temperature()
     enregistrement(temp,mainDir)
     data_to_graph(mainDir)
-    print("saved picture at " + str(datetime.datetime.now()[14:19]) + " the " + str(datetime.datetime.now()[:10]) + " with temperature of " + str(temp) + "\n")
+    print("saved picture at " + str(datetime.datetime.now())[11:16] + " the " + str(datetime.datetime.now())[:10] + " with temperature of " + str(temp) + "\n")
 
 
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     actual_time = None
 
     while(True):
-        if ( int(str(datetime.datetime.now())[14:16]) != actual_time )
+        if ( int(str(datetime.datetime.now())[14:16]) != actual_time ):
             #17:19 : secondes et 14:16 : minutes
             actual_time = int(str(datetime.datetime.now())[14:16])
             program(main_dir)
