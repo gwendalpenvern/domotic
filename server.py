@@ -18,7 +18,7 @@ def get_average_temperature():
     main_dir = str(os.path.abspath(__file__))[:-9]
     day = str(datetime.datetime.now())[:10]
     try:
-        return np.mean(fichierVersListe(main_dir + "data/" + day + ".txt"))
+        return round(np.mean(fichierVersListe(main_dir + "data/" + day + ".txt")),1)
     except:
         return "Unknown"
 

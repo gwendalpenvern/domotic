@@ -130,32 +130,33 @@ def parser():
 
     return args
 
-def program(mainDir):
+def program(mainDir,verbose):
     date = str(datetime.datetime.now())[:10]
     temp = get_temperature()
     enregistrement(temp,mainDir)
     data_to_graph(mainDir,date)
-    print("saved picture at " + str(datetime.datetime.now())[11:16] + " the " + str(datetime.datetime.now())[:10] + " with temperature of " + str(temp) + "'C\n")
+    if verbose: print("saved picture at " + str(datetime.datetime.now())[11:16] + " the " + str(datetime.datetime.now())[:10] + " with temperature of " + str(temp) + "'C\n")
 
 #----------------------------------------------------------------
 
 if __name__ == "__main__":
+
+    argument = parser()
+    timming = int(argument.timming)
+    verbose = argument.verbose
+
     main_dir = str(os.path.abspath(__file__))[:-11]
     #os.system(main_dir + "server.py &")
 
-    print("[!] Début du programme\n")
-    actual_time = int(str(datetime.datetime.now())[14:16])
-    program(main_dir)
+    if verbose: print("[!] Début du programme\n")
 
     while(True):
-        time = int(str(datetime.datetime.now())[14:16])
-        if ( time == actual_time + 1 ):
-            #17:19 : secondes et 14:16 : minutes
-            actual_time = int(str(datetime.datetime.now())[14:16])
+        while(int(str(datetime.datetime.now())[14:16])%timming != 0):
+        pass
 
-            if(actual_time == 59):
-                time = -1
-                
-            program(main_dir)
+        program(main_dir,verbose)
 
-    print("[!] Fin du programme\n")
+        while(int(str(datetime.datetime.now())[14:16])%timming == 0):
+            pass
+
+    if verbose:print("[!] Fin du programme\n")

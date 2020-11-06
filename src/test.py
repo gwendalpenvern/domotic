@@ -15,12 +15,14 @@ def parser():
 
     return args
 
-print(parser().timming)
-
-actual_time = 999
+argument = parser()
+timming = int(argument.timming)
 
 while(True):
-    time = int(str(datetime.datetime.now())[14:16])
-    if ( time != (actual_time + 5) ):
-        #17:19 : secondes et 14:16 : minutes
-        actual_time = int(str(datetime.datetime.now())[14:16])
+    while(int(str(datetime.datetime.now())[17:19])%timming != 0):
+        pass
+
+    print(int(str(datetime.datetime.now())[17:19]))
+
+    while(int(str(datetime.datetime.now())[17:19])%timming == 0):
+        pass
