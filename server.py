@@ -22,6 +22,14 @@ def get_average_temperature():
     except:
         return "Unknown"
 
+def get_actual_temperature():
+    main_dir = str(os.path.abspath(__file__))[:-9]
+    day = str(datetime.datetime.now())[:10]
+    try:
+        return fichierVersListe(main_dir + "data/" + day + ".txt")[-1]
+    except:
+        return "Unknown"
+
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
@@ -39,6 +47,6 @@ def add_header(r):
 
 @app.route("/")
 def affTemp():
-    return render_template('index.html', path_image="/static/images/" + str(datetime.datetime.now())[:10] + ".png",average_temp=get_average_temperature() )
+    return render_template('index.html', path_image="/static/images/" + str(datetime.datetime.now())[:10] + ".png",average_temp=get_average_temperature(),actual_temp=get_actual_temperature() )
 
 app.run(debug=True, host='0.0.0.0', port=5000)

@@ -125,7 +125,7 @@ def data_to_graph(mainDir,date):
 def parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', help="give you some debug information", action="store_true", default=False)
-    parser.add_argument('-t', '--timming', help="time interval between every point measure (minute)", default=5)
+    parser.add_argument('-t', '--timming', help="time interval between every point measure (minute)", default=15)
     args = parser.parse_args()
 
     return args
@@ -146,13 +146,13 @@ if __name__ == "__main__":
     verbose = argument.verbose
 
     main_dir = str(os.path.abspath(__file__))[:-11]
-    #os.system(main_dir + "server.py &")
+    os.system(main_dir + "server.py &")
 
     if verbose: print("[!] Début du programme\n")
 
     while(True):
         while(int(str(datetime.datetime.now())[14:16])%timming != 0):
-        pass
+            pass
 
         program(main_dir,verbose)
 

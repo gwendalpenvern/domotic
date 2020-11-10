@@ -7,22 +7,21 @@ import os
 import time
 import argparse
 
-def parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', help="give you some debug information", action="store_true", default=False)
-    parser.add_argument('-t', '--timming', help="time interval between every point measure (minute)", default=5)
-    args = parser.parse_args()
+def fichierVersListe(cheminFich):
+    f = open(cheminFich, "r")
+    temperature = []
+    for line in f:
+        temperature.append(float(line.split("\n")[0].split(",")[1]))
+    f.close()
+    return temperature
 
-    return args
+def get_actual_temperature():
+    main_dir = str(os.path.abspath(__file__))[:-11]
+    #day = str(datetime.datetime.now())[:10]
+    day = "2020-11-05"
+    try:
+        return fichierVersListe(main_dir + "data/" + day + ".txt")[-1]
+    except:
+        return "Unknown"
 
-argument = parser()
-timming = int(argument.timming)
-
-while(True):
-    while(int(str(datetime.datetime.now())[17:19])%timming != 0):
-        pass
-
-    print(int(str(datetime.datetime.now())[17:19]))
-
-    while(int(str(datetime.datetime.now())[17:19])%timming == 0):
-        pass
+print(get_actual_temperature())
