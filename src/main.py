@@ -108,8 +108,9 @@ def fichierVersListe(cheminFich):
     f.close()
     return [points, temperature]
 
-def data_to_graph(mainDir,date):
-    data = fichierVersListe(mainDir + "data/" + str(date) + ".txt")
+def data_to_graph(mainDir):
+    date = str(datetime.datetime.now())[:10]
+    data = fichierVersListe(mainDir + "data/" + date + ".txt")
     plt.plot(data[0],data[1], color='g', label="Température")
     plt.title("Variation de la température en fonction du temps")
     plt.xticks(rotation=45)
